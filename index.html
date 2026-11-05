@@ -171,16 +171,17 @@
             display: block;
         }
 
-        /* ANIMAÇÃO OBSERVER DE ROLAGEM */
+        /* ANIMAÇÕES INTENSAS DE ENTRADA/SAÍDA (SCROLL) */
         .reveal {
             opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            transform: translateY(50px) scale(0.96);
+            transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: opacity, transform;
         }
 
         .reveal.visible {
             opacity: 1;
-            transform: translateY(0);
+            transform: translateY(0) scale(1);
         }
 
         .card {
@@ -678,8 +679,10 @@
     <script>
         const DISCORD_WEBHOOK_URL = "https://discord.com/api/webhooks/1568017809147961558/7ZG9sFpXjxMj1xBvKDPTgF7HOfHnWHN41LquYi91Ak__GLAHh9n237jLQ-bV6BQwLGX7";
 
-        // TROCA DE ABAS
+        // TROCA DE ABAS COM SCROLL SUAVE PARA O TOPO
         function switchTab(tabId) {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
             const tabs = document.querySelectorAll('.tab-pane');
             const navLinks = document.querySelectorAll('.nav-link');
 
@@ -716,7 +719,7 @@
             });
         }
 
-        // ANIMAÇÕES DE SCROLL (INTERSECTION OBSERVER)
+        // ANIMAÇÕES DE SCROLL INTENSAS (INTERSECTION OBSERVER)
         function initScrollObserver() {
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
@@ -726,7 +729,7 @@
                         entry.target.classList.remove('visible');
                     }
                 });
-            }, { threshold: 0.1 });
+            }, { threshold: 0.08 });
 
             document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
         }
