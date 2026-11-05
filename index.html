@@ -3,330 +3,537 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Comunidade de Blood Strike</title>
+    <title>Comunidade Oficial • Blood Strike</title>
+    <!-- Fonte Google Fonts Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <style>
-        /* Estilos Globais e Tema Blood Strike Minimalista */
         :root {
-            --bg-color: #0d0f12;
-            --card-bg: #161920;
-            --accent-red: #ff3344;
-            --text-main: #f0f2f5;
-            --text-muted: #a0a5b1;
-            --border-color: #262b36;
+            --bg-body: #08090b;
+            --bg-card: rgba(18, 21, 28, 0.75);
+            --bg-card-hover: rgba(26, 30, 40, 0.85);
+            --accent-red: #ff2a44;
+            --accent-red-glow: rgba(255, 42, 68, 0.35);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-color: rgba(255, 255, 255, 0.08);
+            --border-active: rgba(255, 42, 68, 0.5);
+            --radius: 12px;
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
-            background-color: var(--bg-color);
+            background-color: var(--bg-body);
+            background-image: 
+                radial-gradient(circle at 50% 0%, rgba(255, 42, 68, 0.12), transparent 40%),
+                radial-gradient(circle at 100% 100%, rgba(15, 23, 42, 0.8), transparent 50%);
             color: var(--text-main);
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
-            min-height: 100vh;
+            overflow-x: hidden;
         }
 
-        /* Cabecalho e Navegacao */
+        /* Cabecalho Glassmorphism */
         header {
-            background-color: var(--card-bg);
-            border-bottom: 2px solid var(--accent-red);
-            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            background: rgba(8, 9, 11, 0.8);
+            border-bottom: 1px solid var(--border-color);
+            padding: 1.2rem 2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            flex-wrap: wrap;
         }
 
         .logo {
-            font-size: 1.5rem;
-            font-weight: bold;
-            letter-spacing: 1px;
-            color: var(--text-main);
+            font-size: 1.35rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
         .logo span {
             color: var(--accent-red);
+            text-shadow: 0 0 12px var(--accent-red-glow);
         }
 
         nav {
             display: flex;
-            gap: 10px;
-            margin-top: 10px;
+            gap: 8px;
         }
 
         .tab-btn {
             background: transparent;
-            border: 1px solid var(--border-color);
+            border: 1px solid transparent;
             color: var(--text-muted);
-            padding: 8px 16px;
-            border-radius: 6px;
+            padding: 10px 18px;
+            border-radius: var(--radius);
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             font-weight: 600;
+            font-size: 0.9rem;
         }
 
-        .tab-btn:hover, .tab-btn.active {
-            background-color: var(--accent-red);
+        .tab-btn:hover {
+            color: var(--text-main);
+            background: rgba(255, 255, 255, 0.04);
+        }
+
+        .tab-btn.active {
+            background: rgba(255, 42, 68, 0.12);
             color: #fff;
-            border-color: var(--accent-red);
+            border-color: var(--border-active);
+            box-shadow: 0 0 16px var(--accent-red-glow);
         }
 
-        /* Conteudo das Abas */
+        /* Main Container */
         main {
             flex: 1;
-            max-width: 1000px;
-            width: 90%;
-            margin: 2rem auto;
+            max-width: 900px;
+            width: 92%;
+            margin: 3rem auto;
         }
 
+        /* Secoes com Animacao */
         .tab-content {
             display: none;
-            background: var(--card-bg);
-            padding: 2rem;
-            border-radius: 10px;
-            border: 1px solid var(--border-color);
-            animation: fadeIn 0.4s ease;
+            opacity: 0;
+            transform: translateY(20px) scale(0.98);
+            transition: opacity 0.4s ease, transform 0.4s ease;
         }
 
         .tab-content.active {
             display: block;
+            opacity: 1;
+            transform: translateY(0) scale(1);
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(8px); }
-            to { opacity: 1; transform: translateY(0); }
+        .card {
+            background: var(--bg-card);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            padding: 2.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            transition: transform 0.3s ease, border-color 0.3s ease;
         }
 
-        h1, h2 {
-            margin-bottom: 1rem;
-            color: var(--text-main);
+        .card:hover {
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 1.2rem;
+            letter-spacing: -0.5px;
         }
 
         p {
-            line-height: 1.6;
+            line-height: 1.7;
             color: var(--text-muted);
-            margin-bottom: 1rem;
+            font-size: 1rem;
+            margin-bottom: 1.2rem;
         }
 
-        /* Estilos Especificos */
-        .rule-item {
-            background: rgba(255, 255, 255, 0.03);
-            border-left: 3px solid var(--accent-red);
-            padding: 1rem;
+        /* Regras e Destaques */
+        .item-box {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border-color);
+            border-left: 4px solid var(--accent-red);
+            padding: 1.2rem 1.5rem;
+            border-radius: 8px;
             margin-bottom: 1rem;
-            border-radius: 0 6px 6px 0;
+            transition: all 0.3s ease;
         }
 
-        .rule-item h3 {
+        .item-box:hover {
+            background: var(--bg-card-hover);
+            transform: translateX(4px);
+        }
+
+        .item-box h3 {
+            font-size: 1.1rem;
             color: var(--text-main);
-            margin-bottom: 0.3rem;
+            margin-bottom: 0.4rem;
         }
 
+        /* Botao Principal */
         .btn-primary {
-            display: inline-block;
-            background-color: var(--accent-red);
+            background: linear-gradient(135deg, #ff2a44 0%, #d61c33 100%);
             color: #fff;
-            padding: 12px 24px;
-            border-radius: 6px;
-            text-decoration: none;
-            font-weight: bold;
+            padding: 14px 28px;
+            border-radius: var(--radius);
+            font-weight: 700;
+            font-size: 0.95rem;
             border: none;
             cursor: pointer;
-            transition: 0.3s;
-            margin-top: 1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px var(--accent-red-glow);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
         }
 
         .btn-primary:hover {
-            opacity: 0.9;
             transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 42, 68, 0.5);
         }
 
-        /* Formulario de Candidatura (Oculto ate clicar) */
+        /* Formulario Estilizado */
         #form-container {
             display: none;
+            opacity: 0;
+            transform: translateY(15px);
+            transition: all 0.4s ease;
             margin-top: 2rem;
+            padding-top: 2rem;
             border-top: 1px solid var(--border-color);
-            padding-top: 1.5rem;
+        }
+
+        #form-container.show {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .form-group {
-            margin-bottom: 1.2rem;
+            margin-bottom: 1.5rem;
         }
 
         .form-group label {
             display: block;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.6rem;
+            font-size: 0.9rem;
+            font-weight: 600;
             color: var(--text-main);
         }
 
-        .form-group input, .form-group textarea {
+        .form-control {
             width: 100%;
-            padding: 10px;
-            background: var(--bg-color);
+            padding: 12px 16px;
+            background: rgba(8, 9, 11, 0.6);
             border: 1px solid var(--border-color);
-            border-radius: 6px;
+            border-radius: 8px;
             color: var(--text-main);
+            font-size: 0.95rem;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            border-color: var(--accent-red);
+            box-shadow: 0 0 10px var(--accent-red-glow);
+        }
+
+        /* Checkboxes Personalizadas para Dias da Semana */
+        .days-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+            gap: 10px;
+            margin-top: 8px;
+        }
+
+        .checkbox-card {
+            position: relative;
+        }
+
+        .checkbox-card input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .checkbox-label {
+            display: block;
+            padding: 10px;
+            text-align: center;
+            background: rgba(8, 9, 11, 0.6);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            color: var(--text-muted);
+        }
+
+        .checkbox-card input:checked + .checkbox-label {
+            background: rgba(255, 42, 68, 0.15);
+            border-color: var(--accent-red);
+            color: #fff;
+            box-shadow: 0 0 10px var(--accent-red-glow);
         }
 
         /* Rodape */
         footer {
-            background-color: var(--card-bg);
+            background: rgba(8, 9, 11, 0.9);
             border-top: 1px solid var(--border-color);
-            padding: 2rem;
+            padding: 2.5rem 2rem;
             text-align: center;
             margin-top: auto;
         }
 
         footer p {
-            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            margin-bottom: 0.4rem;
         }
 
         .copyright {
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             color: var(--text-muted);
             margin-top: 1rem;
+            letter-spacing: 0.5px;
+        }
+
+        /* Mobile Responsivo */
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                gap: 12px;
+                padding: 1rem;
+            }
+            nav {
+                width: 100%;
+                overflow-x: auto;
+                padding-bottom: 4px;
+                justify-content: flex-start;
+            }
+            .tab-btn {
+                white-space: nowrap;
+                padding: 8px 14px;
+                font-size: 0.85rem;
+            }
+            .card {
+                padding: 1.5rem;
+            }
+            .days-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
         }
     </style>
 </head>
 <body>
 
     <header>
-        <div class="logo">Comunidade de <span>Blood Strike</span></div>
+        <div class="logo">COMUNIDADE <span>BLOOD STRIKE</span></div>
         <nav>
-            <button class="tab-btn active" onclick="openTab('inicio', event)">Menu Principal</button>
-            <button class="tab-btn" onclick="openTab('regras', event)">Regras</button>
-            <button class="tab-btn" onclick="openTab('candidaturas', event)">Candidaturas</button>
-            <button class="tab-btn" onclick="openTab('doacoes', event)">Doações</button>
+            <button class="tab-btn active" onclick="switchTab('inicio')">Menu Principal</button>
+            <button class="tab-btn" onclick="switchTab('regras')">Regras</button>
+            <button class="tab-btn" onclick="switchTab('candidaturas')">Candidaturas</button>
+            <button class="tab-btn" onclick="switchTab('doacoes')">Doações</button>
         </nav>
     </header>
 
     <main>
         <!-- ABA: INICIO -->
         <section id="inicio" class="tab-content active">
-            <h2>Bem-vindo à Comunidade Oficial</h2>
-            <p>Este é o ponto de encontro de todos os Strikers! Nosso objetivo é proporcionar um ambiente organizado, competitivo e divertido para jogadores de todos os níveis de habilidade.</p>
-            <p>Navegue pelas abas superiores para conferir as diretrizes do nosso servidor, enviar sua candidatura para a equipe de moderação ou contribuir com o crescimento da comunidade.</p>
+            <div class="card">
+                <h2>Bem-vindo à Elite Striker</h2>
+                <p>O centro oficial da nossa comunidade no Blood Strike. Aqui você encontra um ecossistema focado no competitivo, organização de squads, torneios exclusivos e ambiente saudável para todos os jogadores.</p>
+                <p>Explore as abas superiores para acessar o regulamento, realizar sua doação para apoiar premiações ou candidatar-se à nossa equipe de moderação.</p>
+            </div>
         </section>
 
         <!-- ABA: REGRAS -->
         <section id="regras" class="tab-content">
-            <h2>Regras da Comunidade</h2>
-            <div class="rule-item">
-                <h3>1. Respeito Mútuo</h3>
-                <p>Proibido qualquer tipo de preconceito, discurso de ódio, ofensas ou assédio nos chats e canais de voz.</p>
-            </div>
-            <div class="rule-item">
-                <h3>2. Sem Spam / Flood</h3>
-                <p>Proibido o envio de mensagens repetidas, correntes ou divulgação de links/servidores sem permissão.</p>
-            </div>
-            <div class="rule-item">
-                <h3>3. Jogo Limpo</h3>
-                <p>Tolerância zero para uso de hacks, cheats, exploração de bugs ou comércio não autorizado de contas.</p>
-            </div>
-            <div class="rule-item">
-                <h3>4. Respeito à Staff</h3>
-                <p>As orientações dos administradores e moderadores devem ser seguidas para garantir a ordem.</p>
+            <div class="card">
+                <h2>Regras da Comunidade</h2>
+                <div class="item-box">
+                    <h3>1️⃣ Respeito Mútuo</h3>
+                    <p>Proibido qualquer tipo de preconceito, discurso de ódio, ofensas ou assédio nos chats de texto e voz.</p>
+                </div>
+                <div class="item-box">
+                    <h3>2️⃣ Sem Spam / Divulgação</h3>
+                    <p>Proibido envio de links externos, correntes ou qualquer tipo de divulgação sem autorização prévia da Staff.</p>
+                </div>
+                <div class="item-box">
+                    <h3>3️⃣ Fair Play (Jogo Limpo)</h3>
+                    <p>Tolerância zero para hacks, cheats, abuso de bugs ou comércio não oficial de contas/itens.</p>
+                </div>
+                <div class="item-box">
+                    <h3>4️⃣ Hierarquia & Staff</h3>
+                    <p>As orientações dos moderadores e administradores devem ser respeitadas em todos os momentos.</p>
+                </div>
             </div>
         </section>
 
         <!-- ABA: CANDIDATURAS -->
         <section id="candidaturas" class="tab-content">
-            <h2>Recrutamento de Ajudante</h2>
-            <p>Estamos em busca de membros dedicados para compor nossa equipe de suporte e moderação no Discord.</p>
-            
-            <div class="rule-item">
-                <h3>📌 Função do Ajudante:</h3>
-                <p>O Ajudante é responsável por tirar dúvidas de novos jogadores, monitorar os chats de texto e voz garantindo que as regras sejam cumpridas, auxiliar na organização de eventos e reportar problemas diretamente à Administração.</p>
-            </div>
+            <div class="card">
+                <h2>Recrutamento para Ajudante</h2>
+                <p>Buscamos membros dedicados para nos ajudar a manter a comunidade limpa, organizada e receptiva.</p>
 
-            <button class="btn-primary" onclick="mostrarFormulario()">Começar a Preencher Formulário</button>
+                <div class="item-box" style="border-left-color: #3b82f6;">
+                    <h3>📋 Qual a função de um Ajudante?</h3>
+                    <p>Orientar novos jogadores, tirar dúvidas no chat, manter a ordem nos canais e reportar bugs ou infratores diretamente para os Administradores.</p>
+                </div>
 
-            <!-- FORMULÁRIO -->
-            <div id="form-container">
-                <h3>Formulário de Inscrição</h3>
-                <form id="applicantForm">
-                    <div class="form-group">
-                        <label>Seu Nick no Discord (ex: usuario#0000):</label>
-                        <input type="text" id="inputDiscord" required placeholder="Digite seu Discord">
-                    </div>
-                    <div class="form-group">
-                        <label>Sua Idade:</label>
-                        <input type="number" id="inputIdade" required placeholder="Sua idade">
-                    </div>
-                    <div class="form-group">
-                        <label>Quanto tempo você tem disponível por dia?</label>
-                        <input type="text" id="inputTempo" required placeholder="Ex: 3 a 4 horas à noite">
-                    </div>
-                    <div class="form-group">
-                        <label>Por que você quer ser Ajudante da nossa comunidade?</label>
-                        <textarea id="inputMotivacao" rows="4" required placeholder="Conte um pouco sobre sua motivação e experiência..."></textarea>
-                    </div>
-                    <button type="submit" class="btn-primary">Enviar Candidatura</button>
-                </form>
+                <div id="intro-candidatura">
+                    <button class="btn-primary" onclick="abrirFormulario()">
+                        📝 Iniciar Formulário de Candidatura
+                    </button>
+                </div>
+
+                <!-- FORMULÁRIO DENTRO DA ABA -->
+                <div id="form-container">
+                    <h3 style="margin-bottom: 1.2rem; font-size: 1.3rem;">Preencha os seus dados</h3>
+                    <form id="applicantForm">
+                        <div class="form-group">
+                            <label>Nick no Discord (ex: usuario#0000):</label>
+                            <input type="text" id="inputDiscord" class="form-control" required placeholder="Digite seu Discord">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Sua Idade:</label>
+                            <input type="number" id="inputIdade" class="form-control" required placeholder="Ex: 18">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Dias da semana disponíveis:</label>
+                            <div class="days-grid">
+                                <div class="checkbox-card">
+                                    <input type="checkbox" id="seg" value="Segunda">
+                                    <label for="seg" class="checkbox-label">Segunda</label>
+                                </div>
+                                <div class="checkbox-card">
+                                    <input type="checkbox" id="ter" value="Terça">
+                                    <label for="ter" class="checkbox-label">Terça</label>
+                                </div>
+                                <div class="checkbox-card">
+                                    <input type="checkbox" id="qua" value="Quarta">
+                                    <label for="qua" class="checkbox-label">Quarta</label>
+                                </div>
+                                <div class="checkbox-card">
+                                    <input type="checkbox" id="qui" value="Quinta">
+                                    <label for="qui" class="checkbox-label">Quinta</label>
+                                </div>
+                                <div class="checkbox-card">
+                                    <input type="checkbox" id="sex" value="Sexta">
+                                    <label for="sex" class="checkbox-label">Sexta</label>
+                                </div>
+                                <div class="checkbox-card">
+                                    <input type="checkbox" id="sab" value="Sábado">
+                                    <label for="sab" class="checkbox-label">Sábado</label>
+                                </div>
+                                <div class="checkbox-card">
+                                    <input type="checkbox" id="dom" value="Domingo">
+                                    <label for="dom" class="checkbox-label">Domingo</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Horário de Disponibilidade:</label>
+                            <input type="text" id="inputHorario" class="form-control" required placeholder="Ex: Das 08:00 às 18:00">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Por que você deseja ser Ajudante?</label>
+                            <textarea id="inputMotivacao" class="form-control" rows="4" required placeholder="Descreva sua motivação, postura e experiências anteriores..."></textarea>
+                        </div>
+
+                        <button type="submit" class="btn-primary">🚀 Enviar Candidatura</button>
+                    </form>
+                </div>
             </div>
         </section>
 
         <!-- ABA: DOAÇÕES -->
         <section id="doacoes" class="tab-content">
-            <h2>Apoie a Comunidade</h2>
-            <p>Todas as doações recebidas são 100% revertidas para o financiamento de torneios com premiação, bots exclusivos e melhorias na infraestrutura do nosso servidor.</p>
-            <p>Se você deseja apoiar nosso trabalho, utilize a chave PIX abaixo ou entre em contato com a Staff:</p>
-            <div class="rule-item">
-                <h3>🔑 Chave PIX:</h3>
-                <p style="color: var(--accent-red); font-weight: bold;">suachavepixaqui@exemplo.com</p>
+            <div class="card">
+                <h2>Apoie o Servidor</h2>
+                <p>Todas as contribuições recebidas são destinadas integralmente à premiação de campeonatos, manutenção dos bots e melhorias na comunidade.</p>
+                <div class="item-box" style="border-left-color: #10b981;">
+                    <h3>🔑 Chave PIX:</h3>
+                    <p style="color: #10b981; font-weight: 700; font-size: 1.1rem; margin-bottom: 0;">suachavepixaqui@exemplo.com</p>
+                </div>
             </div>
         </section>
     </main>
 
     <footer>
-        <p><strong>Sobre a Comunidade de Blood Strike</strong></p>
-        <p>Somos um grupo independente criado por fãs e para fãs de Blood Strike. Focados na união dos jogadores, torneios e interação contínua.</p>
-        <div class="copyright">COPYRIGHT © 2026 - Comunidade de Blood Strike. Todos os direitos reservados.</div>
+        <p><strong>Comunidade de Blood Strike</strong></p>
+        <p>Projeto independente feito de fãs para fãs.</p>
+        <div class="copyright">COPYRIGHT © 2026 - TODOS OS DIREITOS RESERVADOS</div>
     </footer>
 
     <script>
         const DISCORD_WEBHOOK_URL = "https://discord.com/api/webhooks/1568017809147961558/7ZG9sFpXjxMj1xBvKDPTgF7HOfHnWHN41LquYi91Ak__GLAHh9n237jLQ-bV6BQwLGX7";
 
-        function openTab(tabId, event) {
+        // Troca suave de abas
+        function switchTab(tabId) {
             const contents = document.querySelectorAll('.tab-content');
             const buttons = document.querySelectorAll('.tab-btn');
 
-            contents.forEach(content => content.classList.remove('active'));
             buttons.forEach(btn => btn.classList.remove('active'));
-
-            document.getElementById(tabId).classList.add('active');
             event.currentTarget.classList.add('active');
+
+            contents.forEach(content => {
+                content.classList.remove('active');
+            });
+
+            setTimeout(() => {
+                document.getElementById(tabId).classList.add('active');
+            }, 50);
         }
 
-        function mostrarFormulario() {
-            const container = document.getElementById('form-container');
-            container.style.display = 'block';
-            container.scrollIntoView({ behavior: 'smooth' });
+        // Exibir formulário de candidatura
+        function abrirFormulario() {
+            const formContainer = document.getElementById('form-container');
+            const btnIntro = document.getElementById('intro-candidatura');
+            btnIntro.style.display = 'none';
+            formContainer.classList.add('show');
         }
 
+        // Envio do Formulário para Webhook Discord
         document.getElementById('applicantForm').addEventListener('submit', async function(e) {
             e.preventDefault();
 
             const discordUser = document.getElementById('inputDiscord').value;
             const idade = document.getElementById('inputIdade').value;
-            const tempo = document.getElementById('inputTempo').value;
+            const horario = document.getElementById('inputHorario').value;
             const motivacao = document.getElementById('inputMotivacao').value;
+
+            // Coletar dias selecionados
+            const diasSelecionados = [];
+            document.querySelectorAll('.days-grid input[type="checkbox"]:checked').forEach(cb => {
+                diasSelecionados.push(cb.value);
+            });
+
+            if (diasSelecionados.length === 0) {
+                alert('⚠️ Selecione pelo menos um dia da semana!');
+                return;
+            }
 
             const payload = {
                 embeds: [{
-                    title: "📩 Nova Candidatura a Ajudante!",
-                    color: 16724804,
+                    title: "📩 Nova Candidatura de Ajudante!",
+                    color: 16722244,
                     fields: [
-                        { name: "👤 Discord do Candidato:", value: discordUser, inline: true },
+                        { name: "👤 Candidato:", value: discordUser, inline: true },
                         { name: "🎂 Idade:", value: idade, inline: true },
-                        { name: "⏰ Tempo Disponível:", value: tempo, inline: false },
+                        { name: "📅 Dias Disponíveis:", value: diasSelecionados.join(", "), inline: false },
+                        { name: "⏰ Horário:", value: horario, inline: false },
                         { name: "📝 Motivação & Experiência:", value: motivacao, inline: false }
                     ],
-                    footer: { text: "Comunidade de Blood Strike • 2026" },
+                    footer: { text: "Comunidade Blood Strike • 2026" },
                     timestamp: new Date().toISOString()
                 }]
             };
@@ -339,11 +546,12 @@
                 });
 
                 if (response.ok) {
-                    alert('✅ Candidatura enviada com sucesso! A nossa equipe analisará suas respostas no Discord.');
+                    alert('✅ Candidatura enviada com sucesso! A Staff responderá no Discord.');
                     this.reset();
-                    document.getElementById('form-container').style.display = 'none';
+                    document.getElementById('form-container').classList.remove('show');
+                    document.getElementById('intro-candidatura').style.display = 'block';
                 } else {
-                    alert('❌ Ocorreu um erro ao enviar. Tente novamente mais tarde.');
+                    alert('❌ Erro ao enviar a candidatura. Tente novamente.');
                 }
             } catch (error) {
                 alert('❌ Erro de conexão ao enviar a candidatura.');
@@ -351,4 +559,4 @@
         });
     </script>
 </body>
-                </html>
+</html>
