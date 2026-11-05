@@ -2,7 +2,6 @@
 
 <p align="center">
   <img src="https://img.shields.io/badge/Blood%20Strike-Comunidade-e53935?style=for-the-badge&logo=target" alt="Blood Strike Banner">
-  <img src="https://img.shields.io/badge/Discord-Bot%20Online-5865F2?style=for-the-badge&logo=discord&logoColor=white" alt="Discord Bot">
   <img src="https://img.shields.io/badge/Status-Ativo-10b981?style=for-the-badge" alt="Status Ativo">
 </p>
 
@@ -10,52 +9,36 @@
 
 ## 📌 Sobre o Projeto
 
-Este repositório contém a página oficial da **Comunidade de Blood Strike**, projetada com um visual minimalista, clean e moderno. O projeto integra o site da comunidade diretamente ao servidor do Discord por meio de **Webhooks**, permitindo o envio automático de formulários de candidatura para a equipe de moderação.
+Este repositório contém o código-fonte da página oficial da **Comunidade de Blood Strike**, desenvolvida com um design minimalista, clean e confortável. O site foi criado para servir como portal central de informações, diretrizes e interações da comunidade, hospedado de forma otimizada via **GitHub Pages**.
 
 ---
 
 ## 🚀 Funcionalidades do Site
 
-- 📱 **Design Responsivo & Adaptável:** Interface otimizada para PC e dispositivos móveis.
-- 🗂️ **Sistema de Abas Dinâmicas:** 
-  - **Início:** Apresentação da comunidade.
-  - **Regras:** Diretrizes e normas de convivência.
-  - **Candidaturas:** Formulário exclusivo para novos Ajudantes com seleção de dias da semana e horários.
-  - **Doações:** Informações de apoio e chave PIX integrada.
-- ✨ **Animações Fluidas:** Efeitos visuais de scroll e transição ao alternar de aba com retorno suave ao topo.
-- 📋 **Recurso Copiar PIX:** Botão de 1 clique para copiar a chave PIX direto para a área de transferência.
-- 🔗 **Botão Direto para o Discord:** Link de convite oficial integrado no cabeçalho.
-
----
-
-## 🤖 Bot do Discord (StrikeGuard)
-
-O servidor conta com o bot exclusivo **StrikeGuard**, desenvolvido em **Python 3.13** com `discord.py 2.7.1`.
-
-### Recursos do Bot:
-- 🔒 **Atribuição Automática de Cargo:** Adiciona o cargo `Não Verificado` a todos os novos membros que entram no servidor.
-- 🔑 **Painel Unificado de Verificação (`!painel verificação`):** Envia uma mensagem em embed com as regras e o botão interativo persistentemente ativo (`Li e aceito!`).
-- ✅ **Liberação Instantânea:** Ao clicar no botão, o cargo `Não Verificado` é removido e o cargo `Striker` é concedido automaticamente.
+- 📱 **Design Responsivo & Adaptável:** Interface refinada tanto para computadores quanto para dispositivos móveis.
+- 🗂️ **Sistema de Abas Dinâmicas (Grade 2x2):** 
+  - **Início:** Apresentação geral da comunidade e recepção aos jogadores.
+  - **Regras:** Diretrizes essenciais de convivência e fair play.
+  - **Candidaturas:** Formulário exclusivo para o recruta Ajudante, contendo seleção interativa de dias da semana, campos de horários e envio integrado via Webhook para o Discord.
+  - **Doações:** Canal direto de apoio financeiro com chave PIX e botão de cópia rápida.
+- ✨ **Animações de Rolagem:** Elementos que surgem de forma fluida e dinâmica conforme o usuário navega pela página.
+- 🔄 **Rolagem Automática Suave:** Retorno instantâneo e suave ao topo da página ao alternar entre as abas.
+- 🔗 **Botão Direto para o Discord:** Acesso rápido ao servidor oficial da comunidade fixado no cabeçalho.
 
 ---
 
 ## 🛠️ Tecnologias Utilizadas
 
-### **Front-end (Website):**
-- **HTML5 & CSS3** (Estilização clean, variáveis CSS e suporte a Glassmorphism)
-- **JavaScript (ES6+)** (Manuseio de abas, animações com `IntersectionObserver` e integração via Fetch API)
+- **HTML5 & CSS3** (Estilização avançada, variáveis globais, tipografia Inter e suporte a layouts modernos)
+- **JavaScript (ES6+)** (Gerenciamento de abas, animações com `IntersectionObserver`, manipulação de formulários e integração via Fetch API)
 - **GitHub Pages** (Hospedagem estática contínua)
-
-### **Back-end & Automação:**
-- **Python 3.13** + **discord.py 2.7.1**
-- **Discord Webhooks** (Para recebimento instantâneo das candidaturas no canal da Staff)
-- **Termux** (Ambiente de execução e gerenciamento do bot)
+- **Discord Webhooks** (Envio automatizado de candidaturas)
 
 ---
 
 ## 🤝 Como Apoiar a Comunidade
 
-As doações são 100% revertidas para campeonatos com premiações, manutenção dos bots e melhorias estruturais do servidor.
+Todas as contribuições recebidas são integralmente revertidas para o custeio de campeonatos com premiação e melhorias estruturais do projeto.
 
 * **Chave PIX (Celular):** `+5537998136535`
 
