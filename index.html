@@ -323,6 +323,12 @@
             border-color: var(--accent-red);
         }
 
+        /* Estilização para o input de data */
+        input[type="date"]::-webkit-calendar-picker-indicator {
+            filter: invert(1);
+            cursor: pointer;
+        }
+
         /* SELEÇÃO DE DIAS */
         .days-container {
             display: grid;
@@ -588,9 +594,10 @@
                             <input type="text" id="inputDiscord" class="form-control" required placeholder="Digite seu usuário do Discord">
                         </div>
 
+                        <!-- DATA DE NASCIMENTO (SEM PEDIR IDADE) -->
                         <div class="form-group">
-                            <label>Sua Idade:</label>
-                            <input type="number" id="inputIdade" class="form-control" required placeholder="Ex: 18">
+                            <label>Data de Nascimento:</label>
+                            <input type="date" id="inputNascimento" class="form-control" required>
                         </div>
 
                         <div class="form-group">
@@ -734,14 +741,35 @@
             document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
         }
 
+        // FUNÇÃO SILENCIOSA PARA CALCULAR A IDADE EXATA A PARTIR DA DATA DE NASCIMENTO
+        function calcularIdadeExata(dataNascimentoString) {
+            const hoje = new Date();
+            const nascimento = new Date(dataNascimentoString);
+
+            let idade = hoje.getFullYear() - nascimento.getFullYear();
+            const mes = hoje.getMonth() - nascimento.getMonth();
+
+            if (mes < 0 || (mes === 0 && hoje.getDate() < nascimento.getDate())) {
+                idade--;
+            }
+            return idade;
+        }
+
         // ENVIO DO FORMULÁRIO VIA WEBHOOK
         document.getElementById('applicantForm').addEventListener('submit', async function(e) {
             e.preventDefault();
 
             const discordUser = document.getElementById('inputDiscord').value;
-            const idade = document.getElementById('inputIdade').value;
+            const dataNascimentoRaw = document.getElementById('inputNascimento').value;
             const horarios = document.getElementById('inputHorarios').value;
             const motivacao = document.getElementById('inputMotivacao').value;
+
+            // Formatação da Data (DD/MM/AAAA)
+            const partesData = dataNascimentoRaw.split('-');
+            const dataFormatada = `${partesData[2]}/${partesData[1]}/${partesData[0]}`;
+
+            // Cálculo da idade exata em plano de fundo
+            const idadeCalculada = calcularIdadeExata(dataNascimentoRaw);
 
             const dias = [];
             document.querySelectorAll('.day-option input:checked').forEach(cb => dias.push(cb.value));
@@ -757,7 +785,8 @@
                     color: 15022389,
                     fields: [
                         { name: "Candidato", value: discordUser, inline: true },
-                        { name: "Idade", value: idade, inline: true },
+                        { name: "Data de Nascimento", value: dataFormatada, inline: true },
+                        { name: "Idade Exata", value: `${idadeCalculada} anos`, inline: true },
                         { name: "Dias Disponíveis", value: dias.join(", "), inline: false },
                         { name: "Horários", value: horarios, inline: false },
                         { name: "Motivação", value: motivacao, inline: false }
