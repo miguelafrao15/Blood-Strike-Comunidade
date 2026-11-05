@@ -4,213 +4,249 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Comunidade Oficial • Blood Strike</title>
-    <!-- Fonte Google Fonts Inter -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <!-- Google Fonts Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-body: #08090b;
-            --bg-card: rgba(18, 21, 28, 0.75);
-            --bg-card-hover: rgba(26, 30, 40, 0.85);
-            --accent-red: #ff2a44;
-            --accent-red-glow: rgba(255, 42, 68, 0.35);
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
-            --border-color: rgba(255, 255, 255, 0.08);
-            --border-active: rgba(255, 42, 68, 0.5);
-            --radius: 12px;
+            --bg-main: #0c0d10;
+            --bg-card: #14161d;
+            --bg-input: #1a1d26;
+            --accent-red: #e53935;
+            --accent-hover: #d32f2f;
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --border-subtle: rgba(255, 255, 255, 0.08);
+            --border-active: rgba(229, 57, 53, 0.5);
+            --radius-lg: 16px;
+            --radius-md: 10px;
+            --radius-sm: 6px;
+            --transition-smooth: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-family: 'Inter', -apple-system, sans-serif;
             -webkit-tap-highlight-color: transparent;
         }
 
         body {
-            background-color: var(--bg-body);
-            background-image: 
-                radial-gradient(circle at 50% 0%, rgba(255, 42, 68, 0.12), transparent 40%),
-                radial-gradient(circle at 100% 100%, rgba(15, 23, 42, 0.8), transparent 50%);
-            color: var(--text-main);
+            background-color: var(--bg-main);
+            color: var(--text-primary);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
         }
 
-        /* Cabecalho Glassmorphism */
+        /* HEADER & NAVEGAÇÃO */
         header {
             position: sticky;
             top: 0;
-            z-index: 100;
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            background: rgba(8, 9, 11, 0.8);
-            border-bottom: 1px solid var(--border-color);
-            padding: 1.2rem 2rem;
+            z-index: 1000;
+            background: rgba(12, 13, 16, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-subtle);
+            padding: 1rem 2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
-        .logo {
-            font-size: 1.35rem;
-            font-weight: 800;
+        .brand {
+            font-size: 1.25rem;
+            font-weight: 700;
             letter-spacing: -0.5px;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
         }
 
-        .logo span {
+        .brand-accent {
             color: var(--accent-red);
-            text-shadow: 0 0 12px var(--accent-red-glow);
         }
 
         nav {
             display: flex;
+            gap: 6px;
+            background: rgba(255, 255, 255, 0.03);
+            padding: 4px;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-subtle);
+        }
+
+        .nav-link {
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: var(--transition-smooth);
+            display: flex;
+            align-items: center;
             gap: 8px;
         }
 
-        .tab-btn {
-            background: transparent;
-            border: 1px solid transparent;
-            color: var(--text-muted);
-            padding: 10px 18px;
-            border-radius: var(--radius);
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            font-weight: 600;
-            font-size: 0.9rem;
+        .nav-link svg {
+            width: 16px;
+            height: 16px;
+            fill: currentColor;
         }
 
-        .tab-btn:hover {
-            color: var(--text-main);
+        .nav-link:hover {
+            color: var(--text-primary);
             background: rgba(255, 255, 255, 0.04);
         }
 
-        .tab-btn.active {
-            background: rgba(255, 42, 68, 0.12);
-            color: #fff;
-            border-color: var(--border-active);
-            box-shadow: 0 0 16px var(--accent-red-glow);
+        .nav-link.active {
+            background: var(--bg-card);
+            color: var(--text-primary);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--border-subtle);
         }
 
-        /* Main Container */
+        /* CONTEÚDO PRINCIPAL */
         main {
             flex: 1;
-            max-width: 900px;
+            max-width: 860px;
             width: 92%;
-            margin: 3rem auto;
+            margin: 3.5rem auto;
         }
 
-        /* Secoes com Animacao */
-        .tab-content {
+        .tab-pane {
             display: none;
-            opacity: 0;
-            transform: translateY(20px) scale(0.98);
-            transition: opacity 0.4s ease, transform 0.4s ease;
         }
 
-        .tab-content.active {
+        .tab-pane.active {
             display: block;
+        }
+
+        /* ANIMAÇÃO OBSERVER DE ROLAGEM */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .reveal.visible {
             opacity: 1;
-            transform: translateY(0) scale(1);
+            transform: translateY(0);
         }
 
         .card {
             background: var(--bg-card);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-lg);
             padding: 2.5rem;
             margin-bottom: 1.5rem;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-            transition: transform 0.3s ease, border-color 0.3s ease;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
         }
 
-        .card:hover {
-            border-color: rgba(255, 255, 255, 0.15);
-        }
-
-        h2 {
-            font-size: 1.8rem;
+        h1, h2 {
+            font-size: 1.75rem;
             font-weight: 700;
-            margin-bottom: 1.2rem;
             letter-spacing: -0.5px;
+            margin-bottom: 1rem;
         }
 
         p {
+            color: var(--text-secondary);
             line-height: 1.7;
-            color: var(--text-muted);
-            font-size: 1rem;
+            font-size: 0.98rem;
             margin-bottom: 1.2rem;
         }
 
-        /* Regras e Destaques */
-        .item-box {
+        /* ITENS DE INFORMAL/REGRAS */
+        .feature-box {
             background: rgba(255, 255, 255, 0.02);
-            border: 1px solid var(--border-color);
-            border-left: 4px solid var(--accent-red);
-            padding: 1.2rem 1.5rem;
-            border-radius: 8px;
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-md);
+            padding: 1.5rem;
             margin-bottom: 1rem;
-            transition: all 0.3s ease;
+            transition: var(--transition-smooth);
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
         }
 
-        .item-box:hover {
-            background: var(--bg-card-hover);
-            transform: translateX(4px);
+        .feature-box:hover {
+            border-color: rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.03);
         }
 
-        .item-box h3 {
-            font-size: 1.1rem;
-            color: var(--text-main);
-            margin-bottom: 0.4rem;
+        .feature-icon {
+            background: rgba(229, 57, 53, 0.1);
+            color: var(--accent-red);
+            padding: 10px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
         }
 
-        /* Botao Principal */
-        .btn-primary {
-            background: linear-gradient(135deg, #ff2a44 0%, #d61c33 100%);
+        .feature-icon svg {
+            width: 20px;
+            height: 20px;
+            fill: currentColor;
+        }
+
+        .feature-content h3 {
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+        }
+
+        .feature-content p {
+            margin: 0;
+            font-size: 0.9rem;
+        }
+
+        /* BOTÕES */
+        .btn-action {
+            background: var(--accent-red);
             color: #fff;
-            padding: 14px 28px;
-            border-radius: var(--radius);
-            font-weight: 700;
-            font-size: 0.95rem;
             border: none;
+            padding: 14px 28px;
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            font-size: 0.95rem;
             cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 20px var(--accent-red-glow);
+            transition: var(--transition-smooth);
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
+            gap: 10px;
             width: 100%;
         }
 
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(255, 42, 68, 0.5);
+        .btn-action:hover {
+            background: var(--accent-hover);
+            transform: translateY(-1px);
         }
 
-        /* Formulario Estilizado */
-        #form-container {
+        .btn-action svg {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+        }
+
+        /* FORMULÁRIO */
+        #form-wrapper {
             display: none;
-            opacity: 0;
-            transform: translateY(15px);
-            transition: all 0.4s ease;
             margin-top: 2rem;
             padding-top: 2rem;
-            border-top: 1px solid var(--border-color);
+            border-top: 1px solid var(--border-subtle);
         }
 
-        #form-container.show {
+        #form-wrapper.show {
             display: block;
-            opacity: 1;
-            transform: translateY(0);
         }
 
         .form-group {
@@ -219,185 +255,289 @@
 
         .form-group label {
             display: block;
-            margin-bottom: 0.6rem;
-            font-size: 0.9rem;
+            font-size: 0.88rem;
             font-weight: 600;
-            color: var(--text-main);
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
         }
 
         .form-control {
             width: 100%;
             padding: 12px 16px;
-            background: rgba(8, 9, 11, 0.6);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            color: var(--text-main);
+            background: var(--bg-input);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-md);
+            color: var(--text-primary);
             font-size: 0.95rem;
             outline: none;
-            transition: all 0.3s ease;
+            transition: var(--transition-smooth);
         }
 
         .form-control:focus {
             border-color: var(--accent-red);
-            box-shadow: 0 0 10px var(--accent-red-glow);
         }
 
-        /* Checkboxes Personalizadas para Dias da Semana */
-        .days-grid {
+        /* SELEÇÃO DE DIAS */
+        .days-container {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
             gap: 10px;
-            margin-top: 8px;
         }
 
-        .checkbox-card {
+        .day-option {
             position: relative;
         }
 
-        .checkbox-card input {
+        .day-option input {
             position: absolute;
             opacity: 0;
             cursor: pointer;
         }
 
-        .checkbox-label {
+        .day-label {
             display: block;
             padding: 10px;
             text-align: center;
-            background: rgba(8, 9, 11, 0.6);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
+            background: var(--bg-input);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-sm);
             font-size: 0.85rem;
-            font-weight: 600;
+            font-weight: 500;
             cursor: pointer;
-            transition: all 0.2s ease;
-            color: var(--text-muted);
+            color: var(--text-secondary);
+            transition: var(--transition-smooth);
         }
 
-        .checkbox-card input:checked + .checkbox-label {
-            background: rgba(255, 42, 68, 0.15);
+        .day-option input:checked + .day-label {
+            background: rgba(229, 57, 53, 0.15);
             border-color: var(--accent-red);
-            color: #fff;
-            box-shadow: 0 0 10px var(--accent-red-glow);
+            color: var(--text-primary);
         }
 
-        /* Rodape */
+        /* CAIXA DE DOAÇÃO PIX */
+        .pix-box {
+            background: var(--bg-input);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-md);
+            padding: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .pix-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .pix-key {
+            font-family: monospace;
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .btn-copy {
+            background: rgba(255, 255, 255, 0.06);
+            color: var(--text-primary);
+            border: 1px solid var(--border-subtle);
+            padding: 10px 18px;
+            border-radius: var(--radius-sm);
+            font-weight: 500;
+            font-size: 0.88rem;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-copy:hover {
+            background: rgba(255, 255, 255, 0.12);
+        }
+
+        .btn-copy svg {
+            width: 16px;
+            height: 16px;
+            fill: currentColor;
+        }
+
+        /* FOOTER */
         footer {
-            background: rgba(8, 9, 11, 0.9);
-            border-top: 1px solid var(--border-color);
-            padding: 2.5rem 2rem;
+            border-top: 1px solid var(--border-subtle);
+            padding: 3rem 2rem;
             text-align: center;
-            margin-top: auto;
+            background: var(--bg-main);
         }
 
-        footer p {
+        .footer-desc {
             font-size: 0.9rem;
-            margin-bottom: 0.4rem;
+            color: var(--text-secondary);
+            max-width: 500px;
+            margin: 0 auto 1rem;
         }
 
         .copyright {
             font-size: 0.8rem;
-            color: var(--text-muted);
-            margin-top: 1rem;
+            color: var(--text-secondary);
             letter-spacing: 0.5px;
         }
 
-        /* Mobile Responsivo */
+        /* RESPONSIVIDADE MOBILE */
         @media (max-width: 768px) {
             header {
                 flex-direction: column;
-                gap: 12px;
+                gap: 16px;
                 padding: 1rem;
             }
+
             nav {
                 width: 100%;
                 overflow-x: auto;
-                padding-bottom: 4px;
                 justify-content: flex-start;
+                padding: 6px;
             }
-            .tab-btn {
+
+            .nav-link {
                 white-space: nowrap;
-                padding: 8px 14px;
+                padding: 10px 16px;
                 font-size: 0.85rem;
             }
+
             .card {
                 padding: 1.5rem;
             }
-            .days-grid {
-                grid-template-columns: repeat(3, 1fr);
+
+            .pix-box {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .btn-copy {
+                justify-content: center;
             }
         }
     </style>
 </head>
 <body>
 
+    <!-- CABEÇALHO COM LOGO E ABAS -->
     <header>
-        <div class="logo">COMUNIDADE <span>BLOOD STRIKE</span></div>
+        <div class="brand">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#e53935" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+            BLOOD STRIKE <span class="brand-accent">COMMUNITY</span>
+        </div>
         <nav>
-            <button class="tab-btn active" onclick="switchTab('inicio')">Menu Principal</button>
-            <button class="tab-btn" onclick="switchTab('regras')">Regras</button>
-            <button class="tab-btn" onclick="switchTab('candidaturas')">Candidaturas</button>
-            <button class="tab-btn" onclick="switchTab('doacoes')">Doações</button>
+            <button class="nav-link active" onclick="switchTab('inicio')">
+                <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+                Início
+            </button>
+            <button class="nav-link" onclick="switchTab('regras')">
+                <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+                Regras
+            </button>
+            <button class="nav-link" onclick="switchTab('candidaturas')">
+                <svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+                Candidaturas
+            </button>
+            <button class="nav-link" onclick="switchTab('doacoes')">
+                <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                Doações
+            </button>
         </nav>
     </header>
 
     <main>
-        <!-- ABA: INICIO -->
-        <section id="inicio" class="tab-content active">
-            <div class="card">
-                <h2>Bem-vindo à Elite Striker</h2>
-                <p>O centro oficial da nossa comunidade no Blood Strike. Aqui você encontra um ecossistema focado no competitivo, organização de squads, torneios exclusivos e ambiente saudável para todos os jogadores.</p>
-                <p>Explore as abas superiores para acessar o regulamento, realizar sua doação para apoiar premiações ou candidatar-se à nossa equipe de moderação.</p>
+        <!-- ABA 1: INÍCIO -->
+        <section id="inicio" class="tab-pane active">
+            <div class="card reveal">
+                <h1>Comunidade Oficial Blood Strike</h1>
+                <p>Seja bem-vindo ao portal da nossa comunidade. Este espaço foi projetado para promover a interação, competitividade saudável e organização entre os jogadores de Blood Strike.</p>
+                <p>Navegue pelo menu superior para verificar as diretrizes do servidor, apresentar sua candidatura para a equipe de suporte ou apoiar nossas atividades e campeonatos.</p>
             </div>
         </section>
 
-        <!-- ABA: REGRAS -->
-        <section id="regras" class="tab-content">
-            <div class="card">
+        <!-- ABA 2: REGRAS -->
+        <section id="regras" class="tab-pane">
+            <div class="card reveal">
                 <h2>Regras da Comunidade</h2>
-                <div class="item-box">
-                    <h3>1️⃣ Respeito Mútuo</h3>
-                    <p>Proibido qualquer tipo de preconceito, discurso de ódio, ofensas ou assédio nos chats de texto e voz.</p>
+                
+                <div class="feature-box reveal">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+                    </div>
+                    <div class="feature-content">
+                        <h3>1. Respeito Mútuo</h3>
+                        <p>Proibido qualquer tipo de discriminação, discurso de ódio, ofensas ou assédio em nossos canais de texto e voz.</p>
+                    </div>
                 </div>
-                <div class="item-box">
-                    <h3>2️⃣ Sem Spam / Divulgação</h3>
-                    <p>Proibido envio de links externos, correntes ou qualquer tipo de divulgação sem autorização prévia da Staff.</p>
+
+                <div class="feature-box reveal">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg>
+                    </div>
+                    <div class="feature-content">
+                        <h3>2. Sem Divulgação e Spam</h3>
+                        <p>É vedado o envio de links externos, correntes ou anúncios não autorizados pela administração.</p>
+                    </div>
                 </div>
-                <div class="item-box">
-                    <h3>3️⃣ Fair Play (Jogo Limpo)</h3>
-                    <p>Tolerância zero para hacks, cheats, abuso de bugs ou comércio não oficial de contas/itens.</p>
+
+                <div class="feature-box reveal">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-5.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg>
+                    </div>
+                    <div class="feature-content">
+                        <h3>3. Fair Play</h3>
+                        <p>Tolerância zero para uso de programas ilícitos (hacks/cheats), exploração de bugs ou comércio não oficial de contas.</p>
+                    </div>
                 </div>
-                <div class="item-box">
-                    <h3>4️⃣ Hierarquia & Staff</h3>
-                    <p>As orientações dos moderadores e administradores devem ser respeitadas em todos os momentos.</p>
+
+                <div class="feature-box reveal">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
+                    </div>
+                    <div class="feature-content">
+                        <h3>4. Orientações da Staff</h3>
+                        <p>As decisões e orientações proferidas pela equipe de moderação e administração devem ser respeitadas integralmente.</p>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- ABA: CANDIDATURAS -->
-        <section id="candidaturas" class="tab-content">
-            <div class="card">
-                <h2>Recrutamento para Ajudante</h2>
-                <p>Buscamos membros dedicados para nos ajudar a manter a comunidade limpa, organizada e receptiva.</p>
+        <!-- ABA 3: CANDIDATURAS -->
+        <section id="candidaturas" class="tab-pane">
+            <div class="card reveal">
+                <h2>Recrutamento de Ajudante</h2>
+                <p>Buscamos membros comprometidos para integrar a nossa equipe de suporte e manter a organização do servidor.</p>
 
-                <div class="item-box" style="border-left-color: #3b82f6;">
-                    <h3>📋 Qual a função de um Ajudante?</h3>
-                    <p>Orientar novos jogadores, tirar dúvidas no chat, manter a ordem nos canais e reportar bugs ou infratores diretamente para os Administradores.</p>
+                <div class="feature-box reveal">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/></svg>
+                    </div>
+                    <div class="feature-content">
+                        <h3>Atribuições do Ajudante</h3>
+                        <p>Auxiliar membros, sanar dúvidas frequentes, monitorar os chats e reportar incidentes diretamente à Administração.</p>
+                    </div>
                 </div>
 
-                <div id="intro-candidatura">
-                    <button class="btn-primary" onclick="abrirFormulario()">
-                        📝 Iniciar Formulário de Candidatura
+                <div id="btn-start-wrapper" class="reveal">
+                    <button class="btn-action" onclick="toggleForm()">
+                        <svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+                        Preencher Formulário de Candidatura
                     </button>
                 </div>
 
-                <!-- FORMULÁRIO DENTRO DA ABA -->
-                <div id="form-container">
-                    <h3 style="margin-bottom: 1.2rem; font-size: 1.3rem;">Preencha os seus dados</h3>
+                <!-- FORMULÁRIO ISOLADO -->
+                <div id="form-wrapper">
+                    <h2>Dados da Inscrição</h2>
                     <form id="applicantForm">
                         <div class="form-group">
                             <label>Nick no Discord (ex: usuario#0000):</label>
-                            <input type="text" id="inputDiscord" class="form-control" required placeholder="Digite seu Discord">
+                            <input type="text" id="inputDiscord" class="form-control" required placeholder="Digite seu usuário do Discord">
                         </div>
 
                         <div class="form-group">
@@ -407,131 +547,171 @@
 
                         <div class="form-group">
                             <label>Dias da semana disponíveis:</label>
-                            <div class="days-grid">
-                                <div class="checkbox-card">
+                            <div class="days-container">
+                                <div class="day-option">
                                     <input type="checkbox" id="seg" value="Segunda">
-                                    <label for="seg" class="checkbox-label">Segunda</label>
+                                    <label for="seg" class="day-label">Segunda</label>
                                 </div>
-                                <div class="checkbox-card">
+                                <div class="day-option">
                                     <input type="checkbox" id="ter" value="Terça">
-                                    <label for="ter" class="checkbox-label">Terça</label>
+                                    <label for="ter" class="day-label">Terça</label>
                                 </div>
-                                <div class="checkbox-card">
+                                <div class="day-option">
                                     <input type="checkbox" id="qua" value="Quarta">
-                                    <label for="qua" class="checkbox-label">Quarta</label>
+                                    <label for="qua" class="day-label">Quarta</label>
                                 </div>
-                                <div class="checkbox-card">
+                                <div class="day-option">
                                     <input type="checkbox" id="qui" value="Quinta">
-                                    <label for="qui" class="checkbox-label">Quinta</label>
+                                    <label for="qui" class="day-label">Quinta</label>
                                 </div>
-                                <div class="checkbox-card">
+                                <div class="day-option">
                                     <input type="checkbox" id="sex" value="Sexta">
-                                    <label for="sex" class="checkbox-label">Sexta</label>
+                                    <label for="sex" class="day-label">Sexta</label>
                                 </div>
-                                <div class="checkbox-card">
+                                <div class="day-option">
                                     <input type="checkbox" id="sab" value="Sábado">
-                                    <label for="sab" class="checkbox-label">Sábado</label>
+                                    <label for="sab" class="day-label">Sábado</label>
                                 </div>
-                                <div class="checkbox-card">
+                                <div class="day-option">
                                     <input type="checkbox" id="dom" value="Domingo">
-                                    <label for="dom" class="checkbox-label">Domingo</label>
+                                    <label for="dom" class="day-label">Domingo</label>
                                 </div>
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label>Horário de Disponibilidade:</label>
-                            <input type="text" id="inputHorario" class="form-control" required placeholder="Ex: Das 08:00 às 18:00">
+                            <label>Horários disponíveis (ex: 08:00 às 18:00):</label>
+                            <input type="text" id="inputHorarios" class="form-control" required placeholder="Especifique a faixa de horário">
                         </div>
 
                         <div class="form-group">
-                            <label>Por que você deseja ser Ajudante?</label>
-                            <textarea id="inputMotivacao" class="form-control" rows="4" required placeholder="Descreva sua motivação, postura e experiências anteriores..."></textarea>
+                            <label>Por que você gostaria de ser Ajudante?</label>
+                            <textarea id="inputMotivacao" class="form-control" rows="4" required placeholder="Descreva sua motivação e experiência prévia..."></textarea>
                         </div>
 
-                        <button type="submit" class="btn-primary">🚀 Enviar Candidatura</button>
+                        <button type="submit" class="btn-action">
+                            <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+                            Enviar Candidatura
+                        </button>
                     </form>
                 </div>
             </div>
         </section>
 
-        <!-- ABA: DOAÇÕES -->
-        <section id="doacoes" class="tab-content">
-            <div class="card">
-                <h2>Apoie o Servidor</h2>
-                <p>Todas as contribuições recebidas são destinadas integralmente à premiação de campeonatos, manutenção dos bots e melhorias na comunidade.</p>
-                <div class="item-box" style="border-left-color: #10b981;">
-                    <h3>🔑 Chave PIX:</h3>
-                    <p style="color: #10b981; font-weight: 700; font-size: 1.1rem; margin-bottom: 0;">suachavepixaqui@exemplo.com</p>
+        <!-- ABA 4: DOAÇÕES -->
+        <section id="doacoes" class="tab-pane">
+            <div class="card reveal">
+                <h2>Apoie a Comunidade</h2>
+                <p>As doações são inteiramente destinadas ao custeio de campeonatos com premiação, manutenção dos bots e melhorias estruturais do projeto.</p>
+
+                <div class="pix-box reveal">
+                    <div class="pix-info">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#e53935" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"></rect><line x1="2" y1="10" x2="22" y2="10"></line></svg>
+                        <div>
+                            <span style="font-size: 0.8rem; color: var(--text-secondary); display: block;">Chave PIX (Celular)</span>
+                            <span class="pix-key" id="pixKey">+5537998136535</span>
+                        </div>
+                    </div>
+                    <button class="btn-copy" onclick="copyPix()">
+                        <svg viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
+                        <span id="btnCopyText">Copiar Chave</span>
+                    </button>
                 </div>
             </div>
         </section>
     </main>
 
+    <!-- FOOTER -->
     <footer>
-        <p><strong>Comunidade de Blood Strike</strong></p>
-        <p>Projeto independente feito de fãs para fãs.</p>
+        <p class="footer-desc">Comunidade independente de Blood Strike. Criada para unir jogadores e fortalecer a cena competitiva.</p>
         <div class="copyright">COPYRIGHT © 2026 - TODOS OS DIREITOS RESERVADOS</div>
     </footer>
 
+    <!-- JAVASCRIPT -->
     <script>
         const DISCORD_WEBHOOK_URL = "https://discord.com/api/webhooks/1568017809147961558/7ZG9sFpXjxMj1xBvKDPTgF7HOfHnWHN41LquYi91Ak__GLAHh9n237jLQ-bV6BQwLGX7";
 
-        // Troca suave de abas
+        // TROCA DE ABAS
         function switchTab(tabId) {
-            const contents = document.querySelectorAll('.tab-content');
-            const buttons = document.querySelectorAll('.tab-btn');
+            const tabs = document.querySelectorAll('.tab-pane');
+            const navLinks = document.querySelectorAll('.nav-link');
 
-            buttons.forEach(btn => btn.classList.remove('active'));
+            navLinks.forEach(link => link.classList.remove('active'));
             event.currentTarget.classList.add('active');
 
-            contents.forEach(content => {
-                content.classList.remove('active');
+            tabs.forEach(tab => tab.classList.remove('active'));
+            
+            const activeTab = document.getElementById(tabId);
+            activeTab.classList.add('active');
+
+            // Reiniciar animações de scroll na aba ativa
+            initScrollObserver();
+        }
+
+        // MOSTRAR FORMULÁRIO DE CANDIDATURA
+        function toggleForm() {
+            const wrapper = document.getElementById('form-wrapper');
+            const btnStart = document.getElementById('btn-start-wrapper');
+            
+            btnStart.style.display = 'none';
+            wrapper.classList.add('show');
+            wrapper.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // COPIAR CHAVE PIX
+        function copyPix() {
+            const pixKey = document.getElementById('pixKey').innerText;
+            navigator.clipboard.writeText(pixKey).then(() => {
+                const btnText = document.getElementById('btnCopyText');
+                btnText.innerText = "Copiado!";
+                setTimeout(() => {
+                    btnText.innerText = "Copiar Chave";
+                }, 2000);
             });
-
-            setTimeout(() => {
-                document.getElementById(tabId).classList.add('active');
-            }, 50);
         }
 
-        // Exibir formulário de candidatura
-        function abrirFormulario() {
-            const formContainer = document.getElementById('form-container');
-            const btnIntro = document.getElementById('intro-candidatura');
-            btnIntro.style.display = 'none';
-            formContainer.classList.add('show');
+        // ANIMAÇÕES DE SCROLL (INTERSECTION OBSERVER)
+        function initScrollObserver() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    } else {
+                        entry.target.classList.remove('visible');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
         }
 
-        // Envio do Formulário para Webhook Discord
+        // ENVIO DO FORMULÁRIO VIA WEBHOOK
         document.getElementById('applicantForm').addEventListener('submit', async function(e) {
             e.preventDefault();
 
             const discordUser = document.getElementById('inputDiscord').value;
             const idade = document.getElementById('inputIdade').value;
-            const horario = document.getElementById('inputHorario').value;
+            const horarios = document.getElementById('inputHorarios').value;
             const motivacao = document.getElementById('inputMotivacao').value;
 
-            // Coletar dias selecionados
-            const diasSelecionados = [];
-            document.querySelectorAll('.days-grid input[type="checkbox"]:checked').forEach(cb => {
-                diasSelecionados.push(cb.value);
-            });
+            const dias = [];
+            document.querySelectorAll('.day-option input:checked').forEach(cb => dias.push(cb.value));
 
-            if (diasSelecionados.length === 0) {
-                alert('⚠️ Selecione pelo menos um dia da semana!');
+            if (dias.length === 0) {
+                alert('Por favor, selecione pelo menos um dia da semana.');
                 return;
             }
 
             const payload = {
                 embeds: [{
-                    title: "📩 Nova Candidatura de Ajudante!",
-                    color: 16722244,
+                    title: "📩 Nova Candidatura a Ajudante",
+                    color: 15022389,
                     fields: [
-                        { name: "👤 Candidato:", value: discordUser, inline: true },
-                        { name: "🎂 Idade:", value: idade, inline: true },
-                        { name: "📅 Dias Disponíveis:", value: diasSelecionados.join(", "), inline: false },
-                        { name: "⏰ Horário:", value: horario, inline: false },
-                        { name: "📝 Motivação & Experiência:", value: motivacao, inline: false }
+                        { name: "Candidato", value: discordUser, inline: true },
+                        { name: "Idade", value: idade, inline: true },
+                        { name: "Dias Disponíveis", value: dias.join(", "), inline: false },
+                        { name: "Horários", value: horarios, inline: false },
+                        { name: "Motivação", value: motivacao, inline: false }
                     ],
                     footer: { text: "Comunidade Blood Strike • 2026" },
                     timestamp: new Date().toISOString()
@@ -539,24 +719,27 @@
             };
 
             try {
-                const response = await fetch(DISCORD_WEBHOOK_URL, {
+                const res = await fetch(DISCORD_WEBHOOK_URL, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(payload)
                 });
 
-                if (response.ok) {
-                    alert('✅ Candidatura enviada com sucesso! A Staff responderá no Discord.');
+                if (res.ok) {
+                    alert('Candidatura enviada com sucesso! Analisaremos suas respostas em breve.');
                     this.reset();
-                    document.getElementById('form-container').classList.remove('show');
-                    document.getElementById('intro-candidatura').style.display = 'block';
+                    document.getElementById('form-wrapper').classList.remove('show');
+                    document.getElementById('btn-start-wrapper').style.display = 'block';
                 } else {
-                    alert('❌ Erro ao enviar a candidatura. Tente novamente.');
+                    alert('Erro ao processar envio. Tente novamente.');
                 }
-            } catch (error) {
-                alert('❌ Erro de conexão ao enviar a candidatura.');
+            } catch (err) {
+                alert('Erro de conexão ao enviar formulário.');
             }
         });
+
+        // INICIALIZAR OBSERVER AO CARREGAR
+        document.addEventListener('DOMContentLoaded', initScrollObserver);
     </script>
 </body>
 </html>
