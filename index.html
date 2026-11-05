@@ -171,7 +171,7 @@
             display: block;
         }
 
-        /* ANIMAÇÕES INTENSAS DE ENTRADA/SAÍDA (SCROLL) */
+        /* ANIMAÇÕES DE SCROLL */
         .reveal {
             opacity: 0;
             transform: translateY(50px) scale(0.96);
@@ -191,6 +191,8 @@
             padding: 2.5rem;
             margin-bottom: 1.5rem;
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
         }
 
         h1, h2 {
@@ -289,10 +291,18 @@
             margin-top: 2rem;
             padding-top: 2rem;
             border-top: 1px solid var(--border-subtle);
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.6s ease;
         }
 
         #form-wrapper.show {
             display: block;
+        }
+
+        /* ANIMAÇÃO DE AMASSAR E VOAR O FORMULÁRIO */
+        #form-wrapper.crushing {
+            transform: scale(0.1) rotate(15deg) skewX(20deg);
+            opacity: 0;
+            filter: blur(4px);
         }
 
         .form-group {
@@ -323,7 +333,6 @@
             border-color: var(--accent-red);
         }
 
-        /* Estilização para o input de data */
         input[type="date"]::-webkit-calendar-picker-indicator {
             filter: invert(1);
             cursor: pointer;
@@ -364,6 +373,34 @@
             background: rgba(229, 57, 53, 0.15);
             border-color: var(--accent-red);
             color: var(--text-primary);
+        }
+
+        /* TELA DE SUCESSO (PAPEL VOANDO / EMOJI 📄) */
+        #success-screen {
+            display: none;
+            text-align: center;
+            padding: 3rem 1rem;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        #success-screen.show {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .flying-paper {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            display: inline-block;
+            animation: floatPaper 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes floatPaper {
+            0% { transform: translateY(0) rotate(0deg); }
+            100% { transform: translateY(-12px) rotate(-5deg); }
         }
 
         /* CAIXA DE DOAÇÃO PIX */
@@ -594,7 +631,7 @@
                             <input type="text" id="inputDiscord" class="form-control" required placeholder="Digite seu usuário do Discord">
                         </div>
 
-                        <!-- DATA DE NASCIMENTO (SEM PEDIR IDADE) -->
+                        <!-- DATA DE NASCIMENTO -->
                         <div class="form-group">
                             <label>Data de Nascimento:</label>
                             <input type="date" id="inputNascimento" class="form-control" required>
@@ -644,11 +681,18 @@
                             <textarea id="inputMotivacao" class="form-control" rows="4" required placeholder="Descreva sua motivação e experiência prévia..."></textarea>
                         </div>
 
-                        <button type="submit" class="btn-action">
+                        <button type="submit" class="btn-action" id="submitBtn">
                             <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
                             Enviar Candidatura
                         </button>
                     </form>
+                </div>
+
+                <!-- TELA DE SUCESSO (PAPEL VOANDO / EMOJI 📄) -->
+                <div id="success-screen">
+                    <div class="flying-paper">📄</div>
+                    <h3 style="margin-bottom: 0.5px; color: var(--text-primary);">Candidatura Enviada!</h3>
+                    <p style="color: var(--text-secondary);">Sua ficha foi enviada para a equipe de moderação no Discord.</p>
                 </div>
             </div>
         </section>
@@ -741,7 +785,7 @@
             document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
         }
 
-        // FUNÇÃO SILENCIOSA PARA CALCULAR A IDADE EXATA A PARTIR DA DATA DE NASCIMENTO
+        // CALCULAR IDADE EXATA A PARTIR DA DATA DE NASCIMENTO
         function calcularIdadeExata(dataNascimentoString) {
             const hoje = new Date();
             const nascimento = new Date(dataNascimentoString);
@@ -755,7 +799,7 @@
             return idade;
         }
 
-        // ENVIO DO FORMULÁRIO VIA WEBHOOK
+        // ENVIO DO FORMULÁRIO COM ANIMAÇÃO DE PAPEL AMASSANDO E SUBINDO
         document.getElementById('applicantForm').addEventListener('submit', async function(e) {
             e.preventDefault();
 
@@ -764,11 +808,8 @@
             const horarios = document.getElementById('inputHorarios').value;
             const motivacao = document.getElementById('inputMotivacao').value;
 
-            // Formatação da Data (DD/MM/AAAA)
             const partesData = dataNascimentoRaw.split('-');
             const dataFormatada = `${partesData[2]}/${partesData[1]}/${partesData[0]}`;
-
-            // Cálculo da idade exata em plano de fundo
             const idadeCalculada = calcularIdadeExata(dataNascimentoRaw);
 
             const dias = [];
@@ -778,6 +819,14 @@
                 alert('Por favor, selecione pelo menos um dia da semana.');
                 return;
             }
+
+            // APLICAR ANIMAÇÃO DE AMASSAR NO FORMULÁRIO E FADE OUT NO BOTÃO
+            const formWrapper = document.getElementById('form-wrapper');
+            const submitBtn = document.getElementById('submitBtn');
+            
+            submitBtn.style.transition = 'opacity 0.4s ease';
+            submitBtn.style.opacity = '0';
+            formWrapper.classList.add('crushing');
 
             const payload = {
                 embeds: [{
@@ -803,16 +852,19 @@
                     body: JSON.stringify(payload)
                 });
 
-                if (res.ok) {
-                    alert('Candidatura enviada com sucesso! Analisaremos suas respostas em breve.');
-                    this.reset();
-                    document.getElementById('form-wrapper').classList.remove('show');
-                    document.getElementById('btn-start-wrapper').style.display = 'block';
-                } else {
-                    alert('Erro ao processar envio. Tente novamente.');
-                }
+                setTimeout(() => {
+                    formWrapper.style.display = 'none';
+                    formWrapper.classList.remove('crushing');
+                    
+                    // MOSTRAR TELA DE SUCESSO COM O EMOJI 📄 SUBINDO
+                    const successScreen = document.getElementById('success-screen');
+                    successScreen.classList.add('show');
+                }, 500);
+
             } catch (err) {
                 alert('Erro de conexão ao enviar formulário.');
+                formWrapper.classList.remove('crushing');
+                submitBtn.style.opacity = '1';
             }
         });
 
